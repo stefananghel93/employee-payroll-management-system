@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 
 public class EmployeeDto {
 	
-	private String usermane;
+	private String username;
 	private String password;
 
 }

@@ -34,7 +34,7 @@ public class Employee {
 	
 	@NotNull
 	@Size(min =2, max=20, message = "Name must be between 2 and 20 charaters only")
-	@Pattern(regexp = "^[A-Za-z]*", message = "Invalid name, must contain only letters")
+	@Pattern(regexp = "^[A-Za-z0-9]*", message = "Invalid name, must contain only letters")
 	private String name;
 	
 	@NotNull
@@ -52,8 +52,7 @@ public class Employee {
 	private String username;
 	
 	@NotNull
-	@Size(min =8, max=20, message = "Password must be minimum 8 characters and maximum 20 characters")
-	@Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()]) ")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$")
 	private String password;
 	
 	
