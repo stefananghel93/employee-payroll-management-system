@@ -11,4 +11,6 @@ import com.qa.empmanagementsystem.entity.Employee;
 @Transactional
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
+	
+	
 }
