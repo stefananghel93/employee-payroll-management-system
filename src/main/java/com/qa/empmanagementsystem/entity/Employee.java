@@ -42,6 +42,11 @@ public class Employee {
 	private String email;
 	
 	@NotNull
+	@Pattern(regexp = "^(6|7|8|9)\\d{9}$", message = "invalid mobile number")
+	private String phone;
+	
+	
+	@NotNull
 	@Size(min = 2, max = 20, message = "name must be between 2 and 20 alphanumeric characters")
 	@Pattern(regexp = "^[A-Za-z0-9]*", message = "Invalid username, must contain only alphanumeric")
 	private String username;
