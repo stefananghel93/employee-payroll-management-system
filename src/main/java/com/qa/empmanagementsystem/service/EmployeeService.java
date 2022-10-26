@@ -43,6 +43,12 @@ public class EmployeeService implements IEmployeeService {
 	private EmployeeDto mapToEmployeeDto(Employee employee) {
 		return this.modelMapper.map(employee, EmployeeDto.class);
 	}
+
+	@Override
+	public List<Employee> getAllEmployees() {
+		
+		return this.empRepository.findAll();
+	}
 		
 		
 }
