@@ -15,13 +15,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+@ToString
 
 @Entity
 @Table(name = "emp_details")
@@ -55,8 +56,9 @@ public class Employee {
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$")
 	private String password;
 	
-	
+	@NotNull
 	private char gender;
+	
 	@Min(value = 16, message = "Age must be min 16")
 	@Max(value = 70, message="Age must be less than 70")
 	private int age;
