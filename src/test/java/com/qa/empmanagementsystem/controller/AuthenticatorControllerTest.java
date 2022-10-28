@@ -1,8 +1,8 @@
 package com.qa.empmanagementsystem.controller;
 
-
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,7 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,15 +29,16 @@ import com.qa.empmanagementsystem.service.EmployeeService;
 
 
 @ExtendWith(MockitoExtension.class)
-public class EmployeeControllerTest {
+public class AuthenticatorControllerTest {
 
 	@Mock
 	private EmployeeService empService;
 	
+	
+	
 	@Autowired
 	@InjectMocks
-	private EmployeeController empController;
-	
+	private AuthenticationController authController;
 	
 	@Autowired
 	MockMvc mockMvc;
@@ -60,8 +60,8 @@ public class EmployeeControllerTest {
 		emp3 = new Employee(3,"emp3","emp3@gmail.com","6564564523","employee3","Password3@",'F',25,3333.3,"development");
 		empList = Arrays.asList(emp1,emp2,emp3);
 		
-		mockMvc = MockMvcBuilders.standaloneSetup(empController).build();
-	
+		
+		mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
 	}
 	
 	@AfterEach
@@ -72,16 +72,16 @@ public class EmployeeControllerTest {
 	}
 	
 	@Test
-	@DisplayName("get-employee-test")
-	public void given_GetAllEmployees_Should_Return_List() throws Exception {
-		when(empService.getAllEmployees()).thenReturn(empList);
-		mockMvc.perform(get("/api/v1/employees")
-				        .accept(MediaType.APPLICATION_JSON))
-				.andDo(MockMvcResultHandlers.print())
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$[0].name").value("emp1"));
+	@DisplayName("save-employee-test")
+	public void given_Employee_To_Save_Employee_Should_Return_Employee_As_JSON_With_Status_Created() throws Exception {
+		when(empService.signUp(any())).thenReturn(emp1);
+		mockMvc.perform(post("/api/v1/signup")
+				        .contentType(MediaType.APPLICATION_JSON)
+				        .content(asJsonString(emp1)))
+		        .andExpect(status().isCreated())
+		        .andExpect(jsonPath("$.name").value("emp1"));
 	}
-
+	
 	public static String asJsonString(Object obj) {
 		ObjectMapper Obj = new ObjectMapper();
 		String jsonStr = null;
@@ -105,4 +105,5 @@ public class EmployeeControllerTest {
         }
         return jsonStr;
 	}
+	
 }
